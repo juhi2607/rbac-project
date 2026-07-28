@@ -1,11 +1,12 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import {
   Card, CardContent, Table, TableBody, TableCell, TableContainer,
   TableHead, TableRow, IconButton, Typography, Box, TextField,
-  MenuItem, Pagination, Tooltip, Avatar, Select, FormControl, InputLabel,
+  MenuItem, Pagination, Tooltip, Avatar, CircularProgress,
 } from '@mui/material';
 import { EditOutlined, DeleteOutlined, SearchOutlined } from '@mui/icons-material';
 import { toast } from 'react-toastify';
@@ -23,7 +24,7 @@ import { formatDate, getInitials, getRoleColor } from '@/utils/helpers';
 const STATUS_OPTIONS = ['', 'Todo', 'In Progress', 'Review', 'Completed'];
 const PRIORITY_OPTIONS = ['', 'Low', 'Medium', 'High', 'Critical'];
 
-export default function TasksPage() {
+function TasksContent() {
   const { user } = useAuth();
   const searchParams = useSearchParams();
   const defaultProject = searchParams.get('project') || '';
@@ -124,7 +125,7 @@ export default function TasksPage() {
   };
 
   return (
-    <AppLayout>
+    <>
       <PageHeader
         title="Tasks"
         subtitle={`${pagination.total} total tasks`}
@@ -277,6 +278,16 @@ export default function TasksPage() {
         onCancel={() => setDeleteTarget(null)}
         loading={deleteLoading}
       />
+    </>
+  );
+}
+
+export default function TasksPage() {
+  return (
+    <AppLayout>
+      <Suspense fallback={<Box display="flex" justifyContent="center" py={4}><CircularProgress /></Box>}>
+        <TasksContent />
+      </Suspense>
     </AppLayout>
   );
 }
