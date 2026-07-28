@@ -1,8 +1,11 @@
 {
   "name": "rbac-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "RBAC Project Management System - Backend",
   "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
