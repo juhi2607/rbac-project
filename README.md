@@ -8,8 +8,8 @@ A full-stack web application demonstrating Role-Based Access Control (RBAC) buil
 
 | Service | URL |
 |---|---|
-| Frontend | https://your-app.vercel.app *(update after deploy)* |
-| Backend API | https://your-api.onrender.com *(update after deploy)* |
+| Frontend | https://rbac-project-olive.vercel.app |
+| Backend API | https://rbac-project-9nx3.onrender.com/api |
 
 ---
 
