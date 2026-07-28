@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 
+// Polyfill crypto for older Node environments
+if (typeof globalThis.crypto === 'undefined') {
+  globalThis.crypto = require('crypto').webcrypto || require('crypto');
+}
+
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI);

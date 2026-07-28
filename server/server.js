@@ -5,6 +5,15 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 
+// Polyfill crypto for environments where it's not globally available
+if (typeof globalThis.crypto === 'undefined') {
+  try {
+    globalThis.crypto = require('crypto').webcrypto;
+  } catch (e) {
+    globalThis.crypto = require('crypto');
+  }
+}
+
 const connectDB = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
