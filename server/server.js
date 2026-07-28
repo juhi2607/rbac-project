@@ -29,31 +29,12 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-// CORS
-const allowedOrigins = [
-  'http://localhost:3000',
-  'https://rbac-project-olive.vercel.app',
-  process.env.CLIENT_URL,
-].filter(Boolean);
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (mobile apps, curl, Postman)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-      return callback(new Error('Not allowed by CORS'));
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  })
-);
-
-// Handle preflight requests
-app.options('*', cors());
+// CORS — allow all origins for deployment compatibility
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 // Body parsers
 app.use(express.json({ limit: '10kb' }));

@@ -1,7 +1,7 @@
 {
   "name": "rbac-server",
   "version": "1.0.0",
-  "description": "RBAC Project Management System - Backend",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -11,12 +11,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
-    "express": "^5.2.1",
+    "express": "^4.18.2",
     "express-rate-limit": "^8.6.1",
     "express-validator": "^7.3.2",
     "helmet": "^8.3.0",
