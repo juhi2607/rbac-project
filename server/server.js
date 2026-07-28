@@ -16,10 +16,21 @@ connectDB();
 
 const app = express();
 
-// Security headers
-app.use(helmet());
+// CORS must be FIRST — before everything else
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+}));
 
-// Rate limiting — 100 requests per 15 minutes per IP
+// Security headers
+app.use(helmet({
+  crossOriginResourcePolicy: false,
+}));
+
+// Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -29,18 +40,11 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-// CORS — allow all origins for deployment compatibility
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-
 // Body parsers
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Request logging (dev only)
+// Request logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
