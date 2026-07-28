@@ -16,6 +16,9 @@ connectDB();
 
 const app = express();
 
+// Trust proxy — required for Render/Heroku deployments
+app.set('trust proxy', 1);
+
 // CORS must be FIRST — before everything else
 app.use(cors({
   origin: '*',
